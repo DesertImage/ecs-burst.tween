@@ -1,0 +1,10 @@
+  {
+    "name": "com.desertimage.ecs-burst.tween",
+    "version": "0.1.0",
+    "displayName": "ECS",
+    "description": "",
+    "unity": "2020.3",
+    "keywords": [],
+    "gitDependencies": {
+  }
+}
