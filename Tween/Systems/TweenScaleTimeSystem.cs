@@ -13,14 +13,14 @@ namespace Game.Tween
                 .Find();
         }
 
-        public unsafe void Execute(SystemsContext* context)
+        public void Execute(ref SystemsContext context)
         {
             var tweens = _group.GetComponents<TweenScale>();
             for (var i = tweens.Length - 1; i >= 0; i--)
             {
                 ref var tween = ref tweens.Get(i);
 
-                tween.ElapsedTime += context->DeltaTime;
+                tween.ElapsedTime += context.DeltaTime;
 
                 if (tween.ElapsedTime < tween.Time) return;
 

@@ -15,7 +15,7 @@ namespace Game.Tween
                 .Find();
         }
 
-        public unsafe void Execute(SystemsContext* context)
+        public void Execute(ref SystemsContext context)
         {
             var scales = _group.GetComponents<Scale>();
             var tweenScales = _group.GetComponents<TweenScale>();

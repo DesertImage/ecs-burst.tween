@@ -15,7 +15,7 @@ namespace Game.Tween
                 .Find();
         }
 
-        public unsafe void Execute(SystemsContext* context)
+        public void Execute(ref SystemsContext context)
         {
             var rotations = _group.GetComponents<Rotation>();
             var tweenRotations = _group.GetComponents<TweenRotation>();
