@@ -4,8 +4,7 @@
     "references": [
         "DesertImage.ECS",
         "Unity.Mathematics",
-        "DesertImage.ECS.Basic",
-        "com.unity.mathematics"
+        "DesertImage.ECS.Basic"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
