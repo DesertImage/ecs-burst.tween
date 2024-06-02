@@ -32,7 +32,7 @@ public class TweenTests
             entities[i] = entity;
         }
 
-        const ExecutionType executionType = ExecutionType.MultiThread;
+        const ExecutionOrder executionType = ExecutionOrder.MultiThread;
 
         world.Add<TweenPositionCancelSystem>(executionType);
         world.Add<TweenPositionTimeSystem>(executionType);
@@ -72,8 +72,8 @@ public class TweenTests
 
         const int entitiesCount = 1;
         var entities = new Entity[entitiesCount];
-        var results = new float3[entitiesCount];
-        var secondResults = new float3[entitiesCount];
+        var results = new quaternion[entitiesCount];
+        var secondResults = new quaternion[entitiesCount];
 
         for (var i = 0; i < entitiesCount; i++)
         {
@@ -92,7 +92,7 @@ public class TweenTests
             entities[i] = entity;
         }
 
-        const ExecutionType executionType = ExecutionType.MultiThread;
+        const ExecutionOrder executionType = ExecutionOrder.MultiThread;
 
         world.Add<TweenRotationCancelSystem>(executionType);
         world.Add<TweenRotationTimeSystem>(executionType);
@@ -120,8 +120,8 @@ public class TweenTests
 
         for (var i = 0; i < entitiesCount; i++)
         {
-            Assert.AreEqual(.5f, results[i].x);
-            Assert.AreEqual(.5f, secondResults[i].x);
+            Assert.AreEqual(.5f, math.Euler(results[i]).x);
+            Assert.AreEqual(.5f, math.Euler(secondResults[i]).x);
         }
     }
 
@@ -152,7 +152,7 @@ public class TweenTests
             entities[i] = entity;
         }
 
-        const ExecutionType executionType = ExecutionType.MultiThread;
+        const ExecutionOrder executionType = ExecutionOrder.MultiThread;
 
         world.Add<TweenScaleCancelSystem>(executionType);
         world.Add<TweenScaleTimeSystem>(executionType);
