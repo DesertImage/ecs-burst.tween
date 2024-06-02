@@ -20,15 +20,18 @@ namespace Game.Tween
             var rotations = _group.GetComponents<Rotation>();
             var tweenRotations = _group.GetComponents<TweenRotation>();
 
-            for (var i = 0; i < rotations.Length; i++)
+            foreach (var i in _group)
             {
-                var tween = tweenRotations[i];
+                var tween = tweenRotations.Read(i);
 
-                rotations.Get(i).Value = math.lerp
+                rotations.Get(i).Value = quaternion.Euler
                 (
-                    tween.Start,
-                    tween.End,
-                    Easing.GetEase(tween.Ease, tween.ElapsedTime / tween.Time)
+                    math.lerp
+                    (
+                        tween.Start,
+                        tween.End,
+                        Easing.GetEase(tween.Ease, tween.ElapsedTime / tween.Time)
+                    )
                 );
             }
         }

@@ -22,14 +22,14 @@ namespace Game.Tween
 
         public void Execute(ref SystemsContext context)
         {
-            foreach (var entity in _cancelAllGroup)
+            foreach (var entityId in _cancelAllGroup)
             {
-                entity.Remove<TweenPosition>();
+                _cancelAllGroup.GetEntity(entityId).Remove<TweenPosition>();
             }
 
-            foreach (var entity in _cancelPositionGroup)
+            foreach (var entityId in _cancelPositionGroup)
             {
-                entity.Remove<TweenPosition>();
+                _cancelPositionGroup.GetEntity(entityId).Remove<TweenPosition>();
             }
         }
     }

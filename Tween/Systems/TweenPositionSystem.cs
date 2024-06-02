@@ -20,11 +20,13 @@ namespace Game.Tween
             var positions = _group.GetComponents<Position>();
             var tweenPositions = _group.GetComponents<TweenPosition>();
 
-            for (var i = 0; i < positions.Length; i++)
+            foreach (var entityId in _group)
             {
-                var tween = tweenPositions[i];
+                var tween = tweenPositions.Read(entityId);
 
-                positions.Get(i).Value = math.lerp
+                ref var position = ref positions.Get(entityId);
+
+                position.Value = math.lerp
                 (
                     tween.Start,
                     tween.End,

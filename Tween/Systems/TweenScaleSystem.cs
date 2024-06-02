@@ -20,9 +20,9 @@ namespace Game.Tween
             var scales = _group.GetComponents<Scale>();
             var tweenScales = _group.GetComponents<TweenScale>();
 
-            for (var i = 0; i < scales.Length; i++)
+            foreach (var i in _group)
             {
-                var tween = tweenScales[i];
+                var tween = tweenScales.Read(i);
 
                 scales.Get(i).Value = math.lerp
                 (

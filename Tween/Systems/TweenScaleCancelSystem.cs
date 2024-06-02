@@ -2,7 +2,7 @@ using DesertImage.ECS;
 
 namespace Game.Tween
 {
-    public struct TweenScaleCancelSystem  : IInitialize, IExecute
+    public struct TweenScaleCancelSystem : IInitialize, IExecute
     {
         private EntitiesGroup _cancelAllGroup;
         private EntitiesGroup _cancelScaleGroup;
@@ -22,14 +22,14 @@ namespace Game.Tween
 
         public void Execute(ref SystemsContext context)
         {
-            foreach (var entity in _cancelAllGroup)
+            foreach (var entityId in _cancelAllGroup)
             {
-                entity.Remove<TweenScale>();
+                _cancelAllGroup.GetEntity(entityId).Remove<TweenScale>();
             }
 
-            foreach (var entity in _cancelScaleGroup)
+            foreach (var entityId in _cancelScaleGroup)
             {
-                entity.Remove<TweenScale>();
+                _cancelAllGroup.GetEntity(entityId).Remove<TweenScale>();
             }
         }
     }

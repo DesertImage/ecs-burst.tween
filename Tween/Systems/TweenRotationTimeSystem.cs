@@ -16,15 +16,16 @@ namespace Game.Tween
         public void Execute(ref SystemsContext context)
         {
             var tweens = _group.GetComponents<TweenRotation>();
-            for (var i = tweens.Length - 1; i >= 0; i--)
+
+            foreach (var entityId in _group)
             {
-                ref var tween = ref tweens.Get(i);
+                ref var tween = ref tweens.Get(entityId);
 
                 tween.ElapsedTime += context.DeltaTime;
 
                 if (tween.ElapsedTime < tween.Time) return;
 
-                _group.GetEntity(i).Remove<TweenRotation>();
+                _group.GetEntity(entityId).Remove<TweenRotation>();
             }
         }
     }

@@ -27,7 +27,7 @@ namespace Game.Tween
             (
                 new TweenRotation
                 {
-                    Start = entity.Read<Rotation>().Value,
+                    Start = math.Euler(entity.Read<Rotation>().Value),
                     End = target,
                     Time = time,
                     Ease = easeType

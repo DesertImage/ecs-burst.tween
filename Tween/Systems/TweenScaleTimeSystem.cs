@@ -16,7 +16,8 @@ namespace Game.Tween
         public void Execute(ref SystemsContext context)
         {
             var tweens = _group.GetComponents<TweenScale>();
-            for (var i = tweens.Length - 1; i >= 0; i--)
+
+            foreach (var i in _group)
             {
                 ref var tween = ref tweens.Get(i);
 
