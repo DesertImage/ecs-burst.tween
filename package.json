@@ -5,6 +5,7 @@
     "description": "",
     "unity": "2020.3",
     "keywords": [],
-    "gitDependencies": {
+    "dependencies": {
+      "om.unity.mathematics" : "1.2.6"
   }
 }
