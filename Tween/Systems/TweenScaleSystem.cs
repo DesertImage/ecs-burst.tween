@@ -3,7 +3,7 @@ using Unity.Mathematics;
 
 namespace Game.Tween
 {
-    public struct TweenScaleSystem : IInitSystem, IExecuteSystem
+    public struct TweenScaleSystem : IInitialize, IExecute
     {
         private EntitiesGroup _group;
 

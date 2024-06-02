@@ -2,7 +2,7 @@ using DesertImage.ECS;
 
 namespace Game.Tween
 {
-    public struct TweenRotationCancelSystem : IInitSystem, IExecuteSystem
+    public struct TweenRotationCancelSystem : IInitialize, IExecute
     {
         private EntitiesGroup _cancelAllGroup;
         private EntitiesGroup _cancelRotationGroup;

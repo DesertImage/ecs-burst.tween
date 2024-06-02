@@ -2,7 +2,7 @@ using DesertImage.ECS;
 
 namespace Game.Tween
 {
-    public struct TweenRotationTimeSystem : IInitSystem, IExecuteSystem
+    public struct TweenRotationTimeSystem : IInitialize, IExecute
     {
         private EntitiesGroup _group;
 

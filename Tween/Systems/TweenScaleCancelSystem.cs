@@ -2,7 +2,7 @@ using DesertImage.ECS;
 
 namespace Game.Tween
 {
-    public struct TweenScaleCancelSystem  : IInitSystem, IExecuteSystem
+    public struct TweenScaleCancelSystem  : IInitialize, IExecute
     {
         private EntitiesGroup _cancelAllGroup;
         private EntitiesGroup _cancelScaleGroup;

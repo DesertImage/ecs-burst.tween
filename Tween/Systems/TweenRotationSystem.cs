@@ -3,7 +3,7 @@ using Unity.Mathematics;
 
 namespace Game.Tween
 {
-    public struct TweenRotationSystem : IInitSystem, IExecuteSystem
+    public struct TweenRotationSystem : IInitialize, IExecute
     {
         private EntitiesGroup _group;
 

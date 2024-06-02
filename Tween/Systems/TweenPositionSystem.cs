@@ -3,7 +3,7 @@ using Unity.Mathematics;
 
 namespace Game.Tween
 {
-    public struct TweenPositionSystem : IInitSystem, IExecuteSystem
+    public struct TweenPositionSystem : IInitialize, IExecute
     {
         private EntitiesGroup _group;
 
