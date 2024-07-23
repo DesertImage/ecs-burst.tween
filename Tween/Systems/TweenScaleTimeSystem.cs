@@ -1,4 +1,7 @@
+using DesertImage.Collections;
 using DesertImage.ECS;
+using Unity.Burst;
+using Unity.Jobs;
 
 namespace Game.Tween
 {
@@ -15,17 +18,40 @@ namespace Game.Tween
 
         public void Execute(ref SystemsContext context)
         {
-            var tweens = _group.GetComponents<TweenScale>();
-
-            foreach (var i in _group)
+            var job = new TweenScaleTimeJob
             {
-                ref var tween = ref tweens.Get(i);
+                Entitites = _group.Values,
+                TweenScaleList = _group.GetComponents<TweenScale>(),
+                World = context.World,
+                DeltaTime = context.DeltaTime
+            };
 
-                tween.ElapsedTime += context.DeltaTime;
+            context.Handle = job.Schedule(context.Handle);
+        }
 
-                if (tween.ElapsedTime < tween.Time) return;
+        [BurstCompile]
+        private struct TweenScaleTimeJob : IJob
+        {
+            public UnsafeReadOnlyArray<uint> Entitites;
+            public UnsafeUintReadOnlySparseSet<TweenScale> TweenScaleList;
 
-                _group.GetEntity(i).Remove<TweenScale>();
+            public World World;
+            public float DeltaTime;
+
+            public void Execute()
+            {
+                for (var i = 0; i < Entitites.Length; i++)
+                {
+                    var entityId = Entitites[i];
+
+                    ref var tween = ref TweenScaleList.Get(entityId);
+
+                    tween.ElapsedTime += DeltaTime;
+
+                    if (tween.ElapsedTime < tween.Time) continue;
+
+                    World.GetEntity(entityId).Remove<TweenScale>();
+                }
             }
         }
     }

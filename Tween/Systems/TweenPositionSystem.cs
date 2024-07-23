@@ -1,4 +1,7 @@
+using DesertImage.Collections;
 using DesertImage.ECS;
+using Unity.Burst;
+using Unity.Jobs;
 using Unity.Mathematics;
 
 namespace Game.Tween
@@ -17,21 +20,39 @@ namespace Game.Tween
 
         public void Execute(ref SystemsContext context)
         {
-            var positions = _group.GetComponents<Position>();
-            var tweenPositions = _group.GetComponents<TweenPosition>();
-
-            foreach (var entityId in _group)
+            var job = new TweenPositionJob
             {
-                var tween = tweenPositions.Read(entityId);
+                Entitites = _group.Values,
+                PositionList = _group.GetComponents<Position>(),
+                TweenPositionList = _group.GetComponents<TweenPosition>()
+            };
 
-                ref var position = ref positions.Get(entityId);
+            context.Handle = job.Schedule(context.Handle);
+        }
 
-                position.Value = math.lerp
-                (
-                    tween.Start,
-                    tween.End,
-                    Easing.GetEase(tween.Ease, tween.ElapsedTime / tween.Time)
-                );
+        [BurstCompile]
+        private struct TweenPositionJob : IJob
+        {
+            public UnsafeReadOnlyArray<uint> Entitites;
+            public UnsafeUintReadOnlySparseSet<Position> PositionList;
+            public UnsafeUintReadOnlySparseSet<TweenPosition> TweenPositionList;
+
+            public void Execute()
+            {
+                for (var i = 0; i < Entitites.Length; i++)
+                {
+                    var entityId = Entitites[i];
+
+                    var tween = TweenPositionList.Read(entityId);
+                    ref var position = ref PositionList.Get(entityId);
+
+                    position.Value = math.lerp
+                    (
+                        tween.Start,
+                        tween.End,
+                        Easing.GetEase(tween.Ease, tween.ElapsedTime / tween.Time)
+                    );
+                }
             }
         }
     }

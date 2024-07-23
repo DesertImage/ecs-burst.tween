@@ -1,4 +1,7 @@
+using DesertImage.Collections;
 using DesertImage.ECS;
+using Unity.Burst;
+using Unity.Jobs;
 using Unity.Mathematics;
 
 namespace Game.Tween
@@ -17,22 +20,42 @@ namespace Game.Tween
 
         public void Execute(ref SystemsContext context)
         {
-            var rotations = _group.GetComponents<Rotation>();
-            var tweenRotations = _group.GetComponents<TweenRotation>();
-
-            foreach (var i in _group)
+            var job = new TweenRotationJob
             {
-                var tween = tweenRotations.Read(i);
+                Entitites = _group.Values,
+                RotationList = _group.GetComponents<Rotation>(),
+                TweenRotationList = _group.GetComponents<TweenRotation>()
+            };
 
-                rotations.Get(i).Value = quaternion.Euler
-                (
-                    math.lerp
+            context.Handle = job.Schedule(context.Handle);
+        }
+
+        [BurstCompile]
+        private struct TweenRotationJob : IJob
+        {
+            public UnsafeReadOnlyArray<uint> Entitites;
+            public UnsafeUintReadOnlySparseSet<Rotation> RotationList;
+            public UnsafeUintReadOnlySparseSet<TweenRotation> TweenRotationList;
+
+            public void Execute()
+            {
+                for (var i = 0; i < Entitites.Length; i++)
+                {
+                    var entityId = Entitites[i];
+
+                    var tween = TweenRotationList.Read(entityId);
+                    ref var rotation = ref RotationList.Get(entityId);
+
+                    rotation.Value = quaternion.Euler
                     (
-                        tween.Start,
-                        tween.End,
-                        Easing.GetEase(tween.Ease, tween.ElapsedTime / tween.Time)
-                    )
-                );
+                        math.lerp
+                        (
+                            tween.Start,
+                            tween.End,
+                            Easing.GetEase(tween.Ease, tween.ElapsedTime / tween.Time)
+                        )
+                    );
+                }
             }
         }
     }

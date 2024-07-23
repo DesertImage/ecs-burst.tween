@@ -1,11 +1,12 @@
   {
     "name": "com.desertimage.ecs-burst.tween",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "displayName": "ESC-Burst.Tween",
     "description": "",
     "unity": "2020.3",
     "keywords": [],
     "dependencies": {
-      "com.unity.mathematics" : "1.3.2"
+      "com.unity.mathematics" : "1.3.2",
+      "com.unity.burst": "1.6.6"
   }
 }
